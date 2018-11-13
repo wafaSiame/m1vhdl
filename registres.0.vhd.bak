@@ -81,7 +81,7 @@ begin
 	elsif (CLK'event and CLK='1') then
 		-- test si ecriture dans le registre
 		if ((W='0') and ADR_W /= conv_std_logic_vector('0', ADR_W'length)) then
-			REGS(conv_integer(ADR_W)conv_integer(ADR_W)) <= D;
+			REGS(conv_integer(ADR_W)) <= D;
 		end if;
 	end if;
 end process P_REGS;
