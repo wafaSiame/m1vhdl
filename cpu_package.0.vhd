@@ -70,15 +70,17 @@ package body cpu_package is
 -- ===============================================================
 
 -- fonction log2
-function log2 (I: in natural) return natural is
-	variable ______ := <val>
-	variable ______ := <val>
-begin
-	________
-	________
-	________
-	________
-	return ______;
-end log2;
+function log2( I: in natural) return natural is
+
+    variable temp    : integer := 1;
+    variable ret_val : integer := 0; 
+begin					
+    while temp < I loop
+      ret_val := ret_val + 1;
+      temp    := temp * 2;     
+    end loop;
+  	
+    return ret_val;
+  end log2;
 
 end cpu_package;
