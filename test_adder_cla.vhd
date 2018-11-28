@@ -48,8 +48,8 @@ architecture behavior of test_adder_cla is
 	signal I_S		: std_logic_vector(S_DATA-1 downto 0);
 
 	-- definition de ressources externes
-	signal E_RST,E_CLK	 	: std_logic;
-	signal E_A,E_B,E_S		: std_logic_vector(S_DATA-1 downto 0);
+	signal E_RST,E_CLK	 		: std_logic;
+	signal E_A,E_B,E_S			: std_logic_vector(S_DATA-1 downto 0);
 	signal E_COUT,E_V			: std_logic;
 	signal E_ADD_SUB			: std_logic;	-- ('0',ADD) ('1',SUB)
 
@@ -85,17 +85,24 @@ end process P_TIMEOUT;
 -----------------------------------------------------------------
 -- process additionneur
 --		car un appel de procedure est une instruction (process only)
+--adder_cla (A,B: in std_logic_vector;C_IN : in std_logic;
+					--		S : out std_logic_vector;C_OUT : out std_logic;
+					--		V : out std_logic) 
 P_ADDER: process(E_A,E_B,E_ADD_SUB)
-	variable ________;
-	variable ________;
-	variable ________;
-	variable ________;
+	variable S : std_logic_vector(S_DATA-1 downto 0);
+	variable C_OUT : std_logic;
+	variable V : std_logic;
+	variable B : std_logic_vector(S_DATA-1 downto 0);
 begin
-	________
-	________
-	________
-	________
-	________
+	if (E_ADD_SUB = '1') then
+		B := (not E_B);
+	else
+		B := E_B;
+	end if;
+	adder_cla(E_A, B, E_ADD_SUB, S, C_OUT, V);
+	E_COUT <= C_OUT;
+	E_V <= V;
+	E_S <= S;
 end process P_ADDER;
 
 -----------------------------
