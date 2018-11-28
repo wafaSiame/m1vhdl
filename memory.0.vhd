@@ -48,11 +48,11 @@ entity memory is
 		AS				: in std_logic; -- Address Strobe (sorte de /CS)
 
 		-- bus d'adresse du cache
-		ADR			: in std_logic_vector(______ downto 0);
+		ADR			: in std_logic_vector(log2(MEM_SIZE)-1 downto 0);
 
 		-- Ports entree/sortie du cache
-		D				: in std_logic_vector(______ downto 0);
-		Q				: out std_logic_vector(______ downto 0) );
+		D				: in std_logic_vector(DBUS_WIDTH-1 downto 0);
+		Q				: out std_logic_vector(DBUS_WIDTH-1 downto 0) );
 
 end memory;
 
@@ -65,7 +65,7 @@ architecture behavior of memory is
 	-- definition de constantes
 
 	-- definitions de types (index type default is integer)
-	type FILE_REGS is array (0 to ______) of std_logic_vector (DBUS_WIDTH-1 downto 0);
+	type FILE_REGS is array (0 to MEM_SIZE-1) of std_logic_vector (DBUS_WIDTH-1 downto 0);
 
 	-- definition de la fonction de chargement d'un fichier
 	--		on peut egalement mettre cette boucle dans le process qui fait les ecritures
@@ -121,17 +121,16 @@ begin
 			else
 				REGS <= (others => conv_std_logic_vector(0,DBUS_WIDTH));
 			end if;
+		elsif AS = '1' then
+				if RW = '1' then
+					Q <= REGS(conv_integer(ADR));
+				else
+					REGS(conv_integer(ADR))<=D;
+				end if;
 		else
-			________
-			________
-			________
-			________
-			________
-			________
-			________
+				Q <= (others => 'Z');
 		end if;
 	end if;
 end process P_ACCESS;
 
 end behavior;
-
